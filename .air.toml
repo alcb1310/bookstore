@@ -1,0 +1,24 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+cmd = "go build -o ./build/main ./cmd/api/main.go"
+entrypoint = ["./build/main"]
+delay = 1000
+exclude_dir = ["build"]
+exclude_file = []
+exclude_regex = ["_test\\.go"]
+log = "build-errors.log"
+
+[color]
+main = "magenta"
+watcher = "cyan"
+build = "yellow"
+runner = "green"
+
+[misc]
+clean_on_exit = true
+
+[screen]
+clear_on_rebuild = true
+keep_scroll = true

@@ -4,6 +4,16 @@
 
 This project objective is to create a tutorial on how to create API's in Go using Chi.
 
+## Environment variables
+
+The project uses a .env file to store environment variables.
+
+```.env
+PORT=<port number>
+```
+
+The port number is the one the server will be listening to.
+
 ## Tools used
 
 ### Language
@@ -21,6 +31,14 @@ This project objective is to create a tutorial on how to create API's in Go usin
 ### Editor
 
 ![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
+
+### Deployment
+
+![Railway](https://img.shields.io/badge/-Railway-0B0D0E?style=flat&logo=railway&logoColor=white)
+
+### Other tools
+
+![Curl](https://img.shields.io/badge/-curl-073551?style=flat&logo=curl&logoColor=white)
 
 ## Author
 

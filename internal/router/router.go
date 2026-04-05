@@ -5,16 +5,19 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/alcb1310/bookstore/internal/database"
 	"github.com/go-chi/chi/v5"
 )
 
 type service struct {
 	port uint16
+	db   database.Service
 }
 
-func New(port uint16) *service {
+func New(port uint16, db database.Service) *service {
 	return &service{
 		port: port,
+		db:   db,
 	}
 }
 

@@ -21,9 +21,7 @@ func New(port uint16) *service {
 func (s *service) Router() error {
 	r := chi.NewRouter()
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello world"))
-	})
+	r.Get("/", HandleErrors(HomeRoute))
 
 	port := fmt.Sprintf(":%d", s.port)
 	slog.Info("Starting server", "port", port)

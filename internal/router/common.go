@@ -1,6 +1,9 @@
 package router
 
-import "net/http"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 type ErrorResponse func(w http.ResponseWriter, r *http.Request) error
 
@@ -13,6 +16,11 @@ func HandleErrors(h ErrorResponse) http.HandlerFunc {
 }
 
 func HomeRoute(w http.ResponseWriter, r *http.Request) error {
-	_, err := w.Write([]byte("Hello world"))
-	return err
+	return JSONResponse(w, http.StatusOK, map[string]any{"message": "Hello world"})
+}
+
+func JSONResponse(w http.ResponseWriter, code int, data map[string]any) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	return json.NewEncoder(w).Encode(data)
 }

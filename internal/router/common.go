@@ -10,13 +10,13 @@ type ErrorResponse func(w http.ResponseWriter, r *http.Request) error
 func HandleErrors(h ErrorResponse) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if err := h(w, r); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			_ = JSONResponse(w, http.StatusInternalServerError, map[string]any{"error": err.Error()})
 		}
 	}
 }
 
 func HomeRoute(w http.ResponseWriter, r *http.Request) error {
-	return JSONResponse(w, http.StatusOK, map[string]any{"message": "Hello world"})
+	return JSONResponse(w, http.StatusOK, map[string]any{"data": "Hello world"})
 }
 
 func JSONResponse(w http.ResponseWriter, code int, data map[string]any) error {

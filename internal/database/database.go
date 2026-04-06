@@ -8,7 +8,9 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
-type Service interface{}
+type Service interface {
+	HealthCheck() error
+}
 
 type service struct {
 	DB *sql.DB
@@ -28,4 +30,8 @@ func New() (Service, error) {
 	return &service{
 		DB: conn,
 	}, nil
+}
+
+func (s *service) HealthCheck() error {
+	return s.DB.Ping()
 }

@@ -25,7 +25,7 @@ func (s *service) Router() error {
 	r := chi.NewRouter()
 
 	r.Get("/", HandleErrors(HomeRoute))
-	r.Get("/health", HandleErrors(HealthRoute))
+	r.Get("/health", HandleErrors(s.HealthRoute))
 
 	port := fmt.Sprintf(":%d", s.port)
 	slog.Info("Starting server", "port", port)

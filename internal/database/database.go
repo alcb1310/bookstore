@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/alcb1310/bookstore/internal/interfaces"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -38,7 +39,10 @@ func New() (Service, error) {
 }
 
 func (s *service) HealthCheck() error {
-	if err := s.DB.PingContext(context.Background()); err != nil {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := s.DB.PingContext(ctx); err != nil {
 		if e, ok := errors.AsType[*pgconn.PgError](err); ok {
 			switch e.Code {
 			case "3D000":

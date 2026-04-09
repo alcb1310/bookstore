@@ -7,6 +7,7 @@ import (
 
 	"github.com/alcb1310/bookstore/internal/database"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 type service struct {
@@ -23,6 +24,8 @@ func New(port uint16, db database.Service) *service {
 
 func (s *service) Router() error {
 	r := chi.NewRouter()
+
+	r.Use(middleware.Logger)
 
 	r.Get("/", HandleErrors(HomeRoute))
 	r.Get("/health", HandleErrors(s.HealthRoute))

@@ -31,7 +31,7 @@ func (s *service) Router() error {
 	r.Use(middleware.Logger)
 	r.Use(middleware.CleanPath)
 	r.Use(middleware.Recoverer)
-	r.Use(httprate.LimitByIP(100, 1*time.Second))
+	r.Use(httprate.LimitByIP(100, 1*time.Minute))
 
 	r.Get("/", HandleErrors(HomeRoute))
 	r.Get("/health", HandleErrors(s.HealthRoute))

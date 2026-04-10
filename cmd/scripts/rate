@@ -1,0 +1,14 @@
+!# /bin/bash
+
+source .env
+start=$EPOCHREALTIME
+
+for i in {1..103}
+do
+    echo "Request $i"
+    curl http://localhost:$PORT
+done
+
+end=$EPOCHREALTIME
+
+echo "Elapsed: $(echo "$end - $start" | bc) seconds"

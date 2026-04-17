@@ -1,0 +1,3 @@
+all: True
+with-expecter: True
+output: "internal/mocks"

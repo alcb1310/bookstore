@@ -1,9 +1,6 @@
 package router
 
 import (
-	"fmt"
-	"log/slog"
-	"net/http"
 	"time"
 
 	"github.com/alcb1310/bookstore/internal/database"
@@ -24,7 +21,7 @@ func New(port uint16, db database.Service) *service {
 	}
 }
 
-func (s *service) Router() error {
+func (s *service) Router() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RealIP)
@@ -36,7 +33,5 @@ func (s *service) Router() error {
 	r.Get("/", HandleErrors(HomeRoute))
 	r.Get("/health", HandleErrors(s.HealthRoute))
 
-	port := fmt.Sprintf(":%d", s.port)
-	slog.Info("Starting server", "port", port)
-	return http.ListenAndServe(port, r)
+	return r
 }

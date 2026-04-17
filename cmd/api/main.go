@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
+	"net/http"
 	"os"
 	"strconv"
 
@@ -26,7 +28,9 @@ func main() {
 	}
 
 	s := router.New(port, db)
-	if err := s.Router(); err != nil {
+	slog.Info("Starting server", "port", port)
+	h := s.Router()
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), h); err != nil {
 		panic(err)
 	}
 }

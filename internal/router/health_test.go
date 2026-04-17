@@ -47,6 +47,14 @@ func TestHealthRoute(t *testing.T) {
 				OriginalError: fmt.Errorf("database is not available"),
 			}),
 		},
+		{
+			name:   "unknown error",
+			status: http.StatusInternalServerError,
+			response: map[string]any{
+				"error": "Unknown database error",
+			},
+			check: db.EXPECT().HealthCheck().Return(fmt.Errorf("Unknown database error")),
+		},
 	}
 
 	for _, tc := range testCases {

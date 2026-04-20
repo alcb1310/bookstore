@@ -21,7 +21,8 @@ func main() {
 	}
 	port := uint16(port64)
 
-	db, err := database.New()
+	url := os.Getenv("DATABASE_URL")
+	db, err := database.New(url)
 	if err != nil {
 		slog.Error("Error connecting to database", "error", err)
 		panic(err)

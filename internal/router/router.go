@@ -9,19 +9,19 @@ import (
 	"github.com/go-chi/httprate"
 )
 
-type service struct {
+type Router struct {
 	port uint16
 	db   database.Service
 }
 
-func New(port uint16, db database.Service) *service {
-	return &service{
+func New(port uint16, db database.Service) *Router {
+	return &Router{
 		port: port,
 		db:   db,
 	}
 }
 
-func (s *service) Router() *chi.Mux {
+func (s *Router) Router() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RealIP)

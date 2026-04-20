@@ -58,4 +58,21 @@ func TestHealthEndPoint(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, responseBody)
 	})
+
+	t.Run("Integration - database looses connection", func(t *testing.T) {
+		err := pgContainer.Terminate(ctx)
+		assert.NoError(t, err)
+		pgContainer = nil
+		expected := map[string]any{"error": "Database is not available"}
+		req, err := http.NewRequest("GET", testURL, nil)
+		assert.NoError(t, err)
+		res := httptest.NewRecorder()
+		s.Router().ServeHTTP(res, req)
+
+		assert.Equal(t, http.StatusServiceUnavailable, res.Code)
+		responseBody := map[string]any{}
+		err = json.Unmarshal(res.Body.Bytes(), &responseBody)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, responseBody)
+	})
 }

@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/alcb1310/bookstore/internal/interfaces"
@@ -22,8 +21,7 @@ type service struct {
 	DB *sql.DB
 }
 
-func New() (Service, error) {
-	url := os.Getenv("DATABASE_URL")
+func New(url string) (Service, error) {
 	if url == "" {
 		return nil, fmt.Errorf("DATABASE_URL is not set")
 	}

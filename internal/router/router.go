@@ -1,9 +1,6 @@
 package router
 
 import (
-	"fmt"
-	"log/slog"
-	"net/http"
 	"time"
 
 	"github.com/alcb1310/bookstore/internal/database"
@@ -12,19 +9,19 @@ import (
 	"github.com/go-chi/httprate"
 )
 
-type service struct {
+type Router struct {
 	port uint16
 	db   database.Service
 }
 
-func New(port uint16, db database.Service) *service {
-	return &service{
+func New(port uint16, db database.Service) *Router {
+	return &Router{
 		port: port,
 		db:   db,
 	}
 }
 
-func (s *service) Router() error {
+func (s *Router) Router() *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RealIP)
@@ -36,7 +33,5 @@ func (s *service) Router() error {
 	r.Get("/", HandleErrors(HomeRoute))
 	r.Get("/health", HandleErrors(s.HealthRoute))
 
-	port := fmt.Sprintf(":%d", s.port)
-	slog.Info("Starting server", "port", port)
-	return http.ListenAndServe(port, r)
+	return r
 }
